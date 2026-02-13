@@ -681,6 +681,49 @@
           border-radius: 16px;
         }
       }
+      /* ===== FIX VIEWPORT MOBILE (100vh lỗi trên iOS) ===== */
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        height: 100dvh; /* dùng dvh thay cho vh */
+        min-height: 100dvh;
+      }
+
+      /* Panel luôn fit trong màn hình */
+      .panel {
+        height: min(760px, calc(100dvh - 40px));
+      }
+
+      /* ===== TUNING CHO PHONE LANDSCAPE ===== */
+      @media (max-height: 520px) and (orientation: landscape) {
+        .wrap {
+          padding: 10px; /* giảm padding để khỏi bị “zoom” */
+        }
+
+        .panel {
+          height: calc(100dvh - 20px);
+        }
+
+        .bookStage {
+          padding: 10px;
+        }
+
+        .side {
+          padding: 12px;
+        }
+
+        /* đẩy nút lên khỏi sát border */
+        .panelIn {
+          padding-bottom: 16px;
+        }
+
+        .miniControls {
+          margin-bottom: 6px;
+        }
+      }
     </style>
   </head>
 
@@ -789,15 +832,15 @@
       const HELLO_TEXT =
         "Mình gửi bạn một điều dễ thương. Bấm vào đây rồi xem tới cuối nha 😳";
       const LETTERS = [
-        `Gửi bạn,
+        `Gửi em,
 
-Mình không giỏi nói lời hoa mỹ.
-Nhưng mình rất nghiêm túc khi nói rằng:
-bạn làm ngày của mình đẹp hơn.
+Anh không giỏi nói lời hoa mỹ.
+Nhưng anh rất nghiêm túc khi nói rằng:
+em làm ngày của anh đẹp hơn.
 
-Chúc bạn 14/2 vui vẻ.
-Và… nếu bạn cho phép,
-mình muốn đi cùng bạn lâu hơn một chút. 💞`,
+Chúc em 14/2 vui vẻ.
+Và… nếu em cho phép,
+anh muốn đi cùng em lâu hơn một chút. 💞`,
 
         `Gửi em,
 
