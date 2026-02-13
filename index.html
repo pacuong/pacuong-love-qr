@@ -1,0 +1,1119 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <title>💗 14/2</title>
+    <base href="/love-qr/" />
+    <style>
+      :root {
+        --bg1: #0b0011;
+        --bg2: #1b0030;
+        --glass: rgba(255, 255, 255, 0.1);
+        --stroke: rgba(255, 255, 255, 0.18);
+        --text: #fff7ff;
+        --pink: #ff4fd8;
+        --rose: #ff2d55;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        height: 100vh;
+        overflow: hidden;
+        font-family:
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          Arial;
+        color: var(--text);
+        background:
+          radial-gradient(
+            1200px 700px at 20% 18%,
+            rgba(255, 79, 216, 0.22),
+            transparent 60%
+          ),
+          radial-gradient(
+            900px 600px at 80% 78%,
+            rgba(255, 45, 85, 0.16),
+            transparent 62%
+          ),
+          linear-gradient(135deg, var(--bg1), var(--bg2));
+      }
+      .glow {
+        position: absolute;
+        inset: -40vmax;
+        pointer-events: none;
+        background: conic-gradient(
+          from 140deg,
+          rgba(255, 79, 216, 0.18),
+          rgba(255, 255, 255, 0.06),
+          rgba(255, 45, 85, 0.14),
+          rgba(255, 255, 255, 0.05),
+          rgba(255, 79, 216, 0.18)
+        );
+        filter: blur(80px);
+        opacity: 0.9;
+        animation: spin 18s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+
+      .wrap {
+        position: relative;
+        height: 100%;
+        display: grid;
+        place-items: center;
+        padding: 20px;
+      }
+      .panel {
+        width: min(980px, 96vw);
+        border-radius: 26px;
+        background: var(--glass);
+        border: 1px solid var(--stroke);
+        box-shadow: 0 26px 90px rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(14px);
+        overflow: hidden;
+        position: relative;
+        height: min(760px, 86vh);
+        min-height: 520px;
+      }
+
+      /* ===== SCENES ===== */
+      .scene {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        opacity: 0;
+        transform: scale(0.98);
+        transition:
+          opacity 0.55s ease,
+          transform 0.55s ease;
+        pointer-events: none;
+      }
+      .scene.active {
+        opacity: 1;
+        transform: scale(1);
+        pointer-events: auto;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.1);
+        gap: 10px;
+      }
+      .brand {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        font-weight: 1000;
+        letter-spacing: 0.3px;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: radial-gradient(circle at 30% 30%, #fff, var(--pink));
+        box-shadow: 0 0 18px rgba(255, 79, 216, 0.6);
+      }
+      .right {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .content {
+        position: relative;
+        height: calc(100% - 60px);
+      }
+
+      /* ===== INTRO ===== */
+      .intro {
+        text-align: center;
+        padding: 26px 22px;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        font-size: 13px;
+        opacity: 0.95;
+        margin-bottom: 14px;
+      }
+      .intro h1 {
+        margin: 0 0 10px;
+        font-size: clamp(30px, 5vw, 56px);
+        letter-spacing: 0.6px;
+        text-shadow: 0 14px 42px rgba(0, 0, 0, 0.35);
+      }
+      .intro p {
+        margin: 0 auto 18px;
+        max-width: 62ch;
+        opacity: 0.95;
+        line-height: 1.6;
+        font-size: clamp(14px, 2.2vw, 18px);
+      }
+      .btn {
+        border: 0;
+        cursor: pointer;
+        padding: 12px 14px;
+        border-radius: 14px;
+        font-weight: 900;
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        transition:
+          transform 0.12s ease,
+          background 0.12s ease;
+      }
+      .btn:hover {
+        transform: translateY(-1px);
+        background: rgba(255, 255, 255, 0.16);
+      }
+      .btn:active {
+        transform: translateY(1px);
+      }
+      .btnPrimary {
+        color: #120015;
+        background: linear-gradient(135deg, #ffe7ff, #ff9bdc 35%, #ff6aa9);
+        box-shadow: 0 14px 30px rgba(255, 79, 216, 0.18);
+        border-color: rgba(255, 255, 255, 0.22);
+      }
+
+      /* ===== BOOK ===== */
+      .bookStage {
+        width: 100%;
+        height: 100%;
+        padding: 18px;
+      }
+      .book3d {
+        width: 100%;
+        height: 100%;
+        border-radius: 26px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        box-shadow: 0 26px 90px rgba(0, 0, 0, 0.55);
+        overflow: hidden;
+        position: relative;
+        perspective: 1400px;
+        transform-style: preserve-3d;
+        -webkit-transform-style: preserve-3d;
+      }
+      .sheet {
+        position: absolute;
+        inset: 0;
+        transform-style: preserve-3d;
+        -webkit-transform-style: preserve-3d;
+        transform-origin: center center;
+        transition: transform 0.95s cubic-bezier(0.2, 0.9, 0.2, 1);
+        z-index: 5;
+        will-change: transform;
+      }
+      .sheet.open {
+        transform: rotateY(-180deg);
+      }
+      .side {
+        position: absolute;
+        inset: 0;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        display: grid;
+        place-items: center;
+        padding: 18px;
+      }
+      .side.front {
+        cursor: pointer;
+        user-select: none;
+        background:
+          radial-gradient(
+            900px 520px at 20% 20%,
+            rgba(255, 79, 216, 0.22),
+            transparent 55%
+          ),
+          linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.13),
+            rgba(255, 255, 255, 0.05)
+          );
+      }
+      .side.front {
+        transform: translateZ(2px);
+      }
+      .side.back {
+        transform: rotateY(180deg) translateZ(2px);
+      }
+
+      .spread,
+      .panelIn,
+      .note,
+      .photo,
+      .photo img {
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+      }
+      .coverInner {
+        text-align: center;
+      }
+      .coverInner .big {
+        font-weight: 1000;
+        font-size: clamp(28px, 5vw, 52px);
+        letter-spacing: 0.6px;
+        margin: 0 0 12px;
+      }
+      .coverHint {
+        margin-top: 14px;
+        display: inline-block;
+        padding: 10px 14px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        font-weight: 900;
+      }
+      .side.back {
+        transform: rotateY(180deg) translateZ(1px);
+        will-change: transform;
+        background:
+          radial-gradient(
+            900px 520px at 80% 20%,
+            rgba(255, 45, 85, 0.16),
+            transparent 55%
+          ),
+          linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.13),
+            rgba(255, 255, 255, 0.05)
+          );
+      }
+
+      .spread {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      /* ==== FIX MOBILE: 1 cột thì phải cho cuộn + bỏ ép height 100% ==== */
+      @media (max-width: 900px) {
+        /* cho trang sau (nội dung sách) cuộn được */
+        .side.back {
+          overflow: auto;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        /* 1 cột: đừng ép .spread cao 100% nữa */
+        .spread {
+          height: auto;
+          align-content: start;
+          padding-bottom: 14px;
+        }
+
+        /* các panel con không được cố chiếm full height */
+        .panelIn {
+          height: auto;
+          overflow: visible; /* để không cắt nội dung */
+        }
+
+        /* riêng phần chữ: nếu dài thì tự cuộn trong khung */
+        .note {
+          max-height: 42vh;
+          overflow: auto;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        /* đảm bảo khung ảnh có chiều cao tối thiểu để không bị “mất” */
+        .photo {
+          min-height: 260px;
+        }
+      }
+
+      .panelIn {
+        border-radius: 20px;
+        background: rgba(0, 0, 0, 0.14);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        padding: 16px;
+        height: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .note {
+        white-space: pre-wrap;
+        line-height: 1.7;
+        opacity: 0.95;
+        font-size: 16px;
+        flex: 1;
+      }
+      .photo {
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        flex: 1;
+        background: rgba(0, 0, 0, 0.18);
+        position: relative;
+      }
+      .photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        position: relative;
+        z-index: 2;
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        filter: none;
+        transition: opacity 0.28s ease;
+      }
+      .miniControls {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      /* ===== FINAL ===== */
+      .finalWrap {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        place-items: center;
+        padding: 18px;
+      }
+      .finalCore {
+        width: min(340px, 70vw);
+        aspect-ratio: 1/1;
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        background: radial-gradient(
+          circle at 30% 30%,
+          rgba(255, 255, 255, 0.18),
+          rgba(255, 255, 255, 0.05)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        box-shadow: 0 30px 120px rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(12px);
+        position: relative;
+        overflow: hidden;
+        z-index: 60;
+      }
+      .finalText {
+        position: absolute;
+        inset: auto 18px 18px 18px;
+        text-align: center;
+        text-shadow: 0 14px 42px rgba(0, 0, 0, 0.35);
+      }
+      .finalText .h {
+        margin: 0 0 6px;
+        font-size: clamp(20px, 3.8vw, 30px);
+        font-weight: 1000;
+        letter-spacing: 0.4px;
+      }
+      .finalText .p {
+        margin: 0;
+        opacity: 0.95;
+        line-height: 1.5;
+        font-size: 14px;
+      }
+
+      /* orbit photos (giữ nguyên, bạn đang để SPACE_PHOTOS = []) */
+      .orbitPhoto {
+        position: absolute;
+        z-index: 50;
+        pointer-events: none;
+        width: 86px;
+        height: 86px;
+        border-radius: 18px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 18px 60px rgba(0, 0, 0, 0.4);
+        background: rgba(0, 0, 0, 0.25);
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        animation: pop 1s cubic-bezier(0.2, 0.95, 0.2, 1) forwards;
+      }
+      .orbitPhoto img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      @keyframes pop {
+        0% {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0.2);
+        }
+        60% {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1.06);
+        }
+        100% {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1);
+        }
+      }
+
+      #sceneFinal.active {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
+      #sceneFinal {
+        z-index: 30; /* đảm bảo nổi hơn nội dung sách */
+      }
+
+      #orbitLayer {
+        position: absolute;
+        inset: 0;
+        z-index: 1; /* dưới finalCore */
+        pointer-events: none;
+        overflow: hidden; /* tránh ảnh tràn ra ngoài */
+      }
+      #orbitLayer .orbitPhoto {
+        z-index: 1;
+      }
+      .book3d.finalMode .sheet {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      /* Mobile: giảm size ảnh bay để đỡ che */
+      @media (max-width: 600px) {
+        #orbitLayer .orbitPhoto {
+          width: 64px;
+          height: 64px;
+          border-radius: 14px;
+        }
+      }
+      /* ===== POP PHOTOS: phóng ra rồi biến mất (KHÔNG đụng phần book) ===== */
+      .popPhoto {
+        position: absolute;
+        z-index: 9999;
+        pointer-events: none;
+        width: 86px;
+        height: 86px;
+        border-radius: 18px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
+        background: rgba(0, 0, 0, 0.25);
+
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.2);
+        animation: popFloatOut 2.4s cubic-bezier(0.2, 0.95, 0.2, 1) forwards;
+      }
+      .popPhoto img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      @keyframes popFloatOut {
+        0% {
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0.2);
+        }
+        18% {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(1.05);
+        }
+        70% {
+          opacity: 1;
+          transform: translate(-50%, calc(-50% - 24px)) scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: translate(-50%, calc(-50% - 80px)) scale(0.9);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="glow"></div>
+    <canvas id="fx"></canvas>
+    <audio id="bgm" preload="auto" loop>
+      <source src="music.mp3" type="audio/mpeg" />
+    </audio>
+
+    <div class="wrap">
+      <div class="panel">
+        <div class="topbar">
+          <div class="brand"><span class="dot"></span> Love Book</div>
+          <div class="right">
+            <button class="btn" id="btnMusic">🔇 Nhạc</button>
+          </div>
+        </div>
+
+        <div class="content">
+          <!-- INTRO -->
+          <section class="scene active" id="sceneIntro">
+            <div class="intro">
+              <div class="pill">💌 14/2 – dành cho em</div>
+              <h1 id="helloTitle">Valentine vui nhé, em 💗</h1>
+              <p id="helloText">
+                Anh để lại một điều nhỏ ở đây. Nhấn vào xem, rồi xem đến cuối
+                nha 🙈
+              </p>
+              <button class="btn btnPrimary" id="btnEnter">bấm vào đây</button>
+            </div>
+          </section>
+
+          <!-- BOOK -->
+          <section class="scene" id="sceneBook">
+            <div class="bookStage">
+              <div class="book3d">
+                <div class="sheet" id="sheet">
+                  <div class="side front" id="cover">
+                    <div class="coverInner">
+                      <div class="big">Hồi hộp quá💞</div>
+                      <div class="coverHint">Mở Thư💞</div>
+                    </div>
+                  </div>
+
+                  <div class="side back">
+                    <div class="spread">
+                      <div class="panelIn">
+                        <div class="note" id="noteText"></div>
+                        <div class="miniControls">
+                          <button class="btn" id="btnPrev">← Ảnh trước</button>
+                          <button class="btn" id="btnNext">Ảnh sau →</button>
+                        </div>
+                      </div>
+
+                      <div class="panelIn">
+                        <div class="photo">
+                          <img id="mainImg" src="photo1.jpg" alt="photo" />
+                        </div>
+                        <div class="miniControls">
+                          <button class="btn btnPrimary" id="btnCloseBook">
+                            Thách em bấm vào 💞
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- FINAL overlay -->
+                <div
+                  class="scene"
+                  id="sceneFinal"
+                  style="
+                    position: absolute;
+                    inset: 0;
+                    opacity: 0;
+                    pointer-events: none;
+                  "
+                >
+                  <div id="orbitLayer" aria-hidden="true"></div>
+                  <div class="finalWrap">
+                    <div class="finalCore" id="finalCore">
+                      <canvas
+                        id="heartCanvas"
+                        style="
+                          position: absolute;
+                          inset: 0;
+                          width: 100%;
+                          height: 100%;
+                        "
+                      ></canvas>
+                    </div>
+                  </div>
+                </div>
+                <!-- /FINAL overlay -->
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ================== TÙY BIẾN ==================
+      const HELLO_TEXT =
+        "Mình gửi bạn một điều dễ thương. Bấm vào đây rồi xem tới cuối nha 😳";
+      const LETTERS = [
+        `Gửi bạn,
+
+Mình không giỏi nói lời hoa mỹ.
+Nhưng mình rất nghiêm túc khi nói rằng:
+bạn làm ngày của mình đẹp hơn.
+
+Chúc bạn 14/2 vui vẻ.
+Và… nếu bạn cho phép,
+mình muốn đi cùng bạn lâu hơn một chút. 💞`,
+
+        `Gửi em,
+
+Có những ngày anh chỉ muốn nhắn “em ổn không?”
+nhưng lại sợ làm phiền.
+Nên anh chọn cách lặng lẽ quan tâm.
+
+Valentine này, anh muốn em biết:
+em quan trọng với anh. 💗`,
+
+        `Gửi em lần nữa,
+
+Nếu được chọn một điều để giữ lại trong năm nay,
+anh sẽ chọn những khoảnh khắc có em.
+Nhẹ thôi… nhưng đủ để anh nhớ. 🫶`,
+      ];
+
+      // ✅ link tuyệt đối cho chắc
+      const BASE = "https://pacuong.github.io/love-qr/";
+      const BOOK_PHOTOS = ["photo1.jpg", "photo2.jpg", "photo3.jpg"].map(
+        (f) => BASE + f,
+      );
+
+      // ✅ dùng đúng 3 ảnh của sách để phóng ra rồi biến mất
+      const POP_PHOTOS = BOOK_PHOTOS;
+
+      // nếu bạn không có space1..space12 thì để mảng rỗng hoặc thay bằng ảnh có thật
+      const SPACE_PHOTOS = [];
+
+      // set text
+      document.getElementById("helloText").textContent = HELLO_TEXT;
+      document.getElementById("noteText").textContent = LETTERS[0];
+
+      // scenes
+      const sceneIntro = document.getElementById("sceneIntro");
+      const sceneBook = document.getElementById("sceneBook");
+      const sceneFinal = document.getElementById("sceneFinal");
+
+      function showScene(name) {
+        sceneIntro.classList.toggle("active", name === "intro");
+        sceneBook.classList.toggle(
+          "active",
+          name === "book" || name === "final",
+        );
+        sceneFinal.classList.toggle("active", name === "final");
+      }
+
+      // music control (must be user gesture)
+      const bgm = document.getElementById("bgm");
+      const btnMusic = document.getElementById("btnMusic");
+      let musicOn = false;
+
+      async function tryPlayMusic() {
+        try {
+          await bgm.play();
+          musicOn = true;
+          btnMusic.textContent = "🔊 Nhạc";
+        } catch (e) {}
+      }
+      function toggleMusic() {
+        if (!musicOn) tryPlayMusic();
+        else {
+          bgm.pause();
+          musicOn = false;
+          btnMusic.textContent = "🔇 Nhạc";
+        }
+      }
+      btnMusic.addEventListener("click", toggleMusic);
+      window.addEventListener("pointerdown", tryPlayMusic, { once: true });
+      window.addEventListener("keydown", tryPlayMusic, { once: true });
+
+      // intro -> book
+      document.getElementById("btnEnter").addEventListener("click", () => {
+        tryPlayMusic();
+        showScene("book");
+        boom();
+      });
+
+      // book open / close (GIỮ NGUYÊN)
+      const sheet = document.getElementById("sheet");
+      document.getElementById("cover").addEventListener("click", () => {
+        sheet.classList.add("open");
+        boom();
+      });
+
+      // right page photo (GIỮ NGUYÊN)
+      const mainImg = document.getElementById("mainImg");
+      let p = 0;
+      mainImg.src = BOOK_PHOTOS[0];
+
+      function setPhoto(i) {
+        p = (i + BOOK_PHOTOS.length) % BOOK_PHOTOS.length;
+
+        // đổi chữ theo ảnh (cùng index)
+        document.getElementById("noteText").textContent =
+          LETTERS[p] ?? LETTERS[0];
+
+        // đổi ảnh
+        mainImg.style.opacity = 0;
+        setTimeout(() => {
+          mainImg.src = BOOK_PHOTOS[p];
+          mainImg.style.opacity = 1;
+        }, 160);
+      }
+
+      document.getElementById("btnPrev").addEventListener("click", () => {
+        setPhoto(p - 1);
+        boomSmall();
+      });
+      document.getElementById("btnNext").addEventListener("click", () => {
+        setPhoto(p + 1);
+        boomSmall();
+      });
+
+      // ✅ close book -> final + phóng ảnh ra rồi biến mất (chỉ thêm hiệu ứng, không đụng book)
+      document.getElementById("btnCloseBook").addEventListener("click", () => {
+        boom();
+
+        // Ẩn sách NGAY, khỏi cho nó quay về bìa => không còn flash "Một quyển sách nhỏ"
+        document.querySelector(".book3d")?.classList.add("finalMode");
+
+        // nếu bạn không muốn lặp vô hạn thì đổi Infinity -> 4500 chẳng hạn
+        startPopPhotos(Infinity, 180);
+
+        // vào final gần như ngay lập tức
+        showFinalExplosion();
+      });
+
+      function showFinalExplosion() {
+        showScene("final");
+        const orbitLayer = document.getElementById("orbitLayer");
+        orbitLayer && (orbitLayer.innerHTML = "");
+
+        if (SPACE_PHOTOS.length) spawnOrbitPhotos();
+        startHeartParticles();
+        boomBig();
+      }
+
+      // ===== POP PHOTOS (phóng ra rồi biến mất, lặp) =====
+      let popTimer = null;
+
+      function startPopPhotos(duration = 4500, interval = 160) {
+        stopPopPhotos();
+        const panel = document.querySelector(".panel");
+        const tEnd = Date.now() + duration;
+
+        popTimer = setInterval(() => {
+          if (Date.now() > tEnd) return stopPopPhotos();
+          spawnPopOne(panel);
+        }, interval);
+      }
+
+      function stopPopPhotos() {
+        if (popTimer) clearInterval(popTimer);
+        popTimer = null;
+      }
+
+      function spawnPopOne(panel) {
+        const rect = panel.getBoundingClientRect();
+        const box = document.createElement("div");
+        box.className = "popPhoto";
+
+        const x = Math.random() * rect.width;
+        const y = Math.random() * rect.height;
+
+        box.style.left = x + "px";
+        box.style.top = y + "px";
+
+        const img = document.createElement("img");
+        img.src = POP_PHOTOS[(Math.random() * POP_PHOTOS.length) | 0];
+
+        box.appendChild(img);
+        panel.appendChild(box);
+
+        setTimeout(() => box.remove(), 2600);
+      }
+
+      // ===== orbit photos (giữ nguyên) =====
+      function spawnOrbitPhotos() {
+        const core = document.getElementById("finalCore");
+        const rect = core.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+
+        const count = Math.min(SPACE_PHOTOS.length, 16);
+        const rMin = Math.max(rect.width, rect.height) * 0.72;
+        const rMax = Math.max(rect.width, rect.height) * 1.25;
+
+        for (let k = 0; k < count; k++) {
+          const angle = Math.PI * 2 * (k / count) + Math.random() * 0.35;
+          const rr = rMin + Math.random() * (rMax - rMin);
+          const x = cx + Math.cos(angle) * rr;
+          const y = cy + Math.sin(angle) * rr;
+
+          const box = document.createElement("div");
+          box.className = "orbitPhoto";
+          box.style.left = x + "px";
+          box.style.top = y + "px";
+          box.style.animationDelay = k * 0.04 + "s";
+
+          const img = document.createElement("img");
+          img.src = SPACE_PHOTOS[k % SPACE_PHOTOS.length];
+          box.appendChild(img);
+
+          const orbitLayer = document.getElementById("orbitLayer");
+          (orbitLayer || document.body).appendChild(box);
+        }
+
+        let t0 = performance.now();
+        const orbits = Array.from(document.querySelectorAll(".orbitPhoto")).map(
+          (el, i) => {
+            const a0 =
+              Math.PI * 2 * (i / Math.max(1, count)) + Math.random() * 0.2;
+            const rad = rMin + (i % 3) * ((rMax - rMin) / 3);
+            return { el, a0, rad, sp: 0.00035 + (i % 5) * 0.00008 };
+          },
+        );
+
+        function tick(now) {
+          const dt = now - t0;
+          const rect2 = core.getBoundingClientRect();
+          const cxx = rect2.left + rect2.width / 2;
+          const cyy = rect2.top + rect2.height / 2;
+
+          orbits.forEach((o, idx) => {
+            const a = o.a0 + dt * o.sp * (idx % 2 ? 1 : -1);
+            o.el.style.left = cxx + Math.cos(a) * o.rad + "px";
+            o.el.style.top = cyy + Math.sin(a) * o.rad + "px";
+          });
+
+          requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+
+      // ===== Heart particle inside heartCanvas (giữ nguyên) =====
+      let heartRunning = false;
+      function startHeartParticles() {
+        if (heartRunning) return;
+        heartRunning = true;
+
+        const canvas = document.getElementById("heartCanvas");
+        const ctx = canvas.getContext("2d");
+        const host = document.getElementById("finalCore");
+
+        function resizeHeart() {
+          const dpr = Math.min(2, devicePixelRatio || 1);
+          canvas.width = Math.floor(host.clientWidth * dpr);
+          canvas.height = Math.floor(host.clientHeight * dpr);
+          canvas.style.width = host.clientWidth + "px";
+          canvas.style.height = host.clientHeight + "px";
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+        resizeHeart();
+        window.addEventListener("resize", resizeHeart);
+
+        const parts = [];
+        const N = 900;
+        for (let i = 0; i < N; i++) {
+          const t = Math.random() * Math.PI * 2;
+          const x0 = 16 * Math.pow(Math.sin(t), 3);
+          const y0 =
+            13 * Math.cos(t) -
+            5 * Math.cos(2 * t) -
+            2 * Math.cos(3 * t) -
+            Math.cos(4 * t);
+          parts.push({
+            x: x0,
+            y: -y0,
+            off: Math.random() * Math.PI * 2,
+            hue: (Math.random() * 360) | 0,
+            a: 0.55 + Math.random() * 0.45,
+          });
+        }
+
+        function draw(now) {
+          const w = host.clientWidth;
+          const h = host.clientHeight;
+          ctx.clearRect(0, 0, w, h);
+
+          const scale = Math.min(w, h) * 0.02;
+          const cx = w / 2,
+            cy = h / 2;
+
+          parts.forEach((p, i) => {
+            const wave = 0.85 + 0.15 * Math.sin(now * 0.002 + p.off);
+            const x = cx + p.x * scale * wave + Math.sin(now * 0.002 + i) * 0.6;
+            const y = cy + p.y * scale * wave + Math.cos(now * 0.002 + i) * 0.6;
+
+            const hue = (p.hue + now * 0.02) % 360;
+            ctx.fillStyle = `hsla(${hue}, 95%, 70%, ${p.a})`;
+            ctx.shadowColor = `hsla(${hue}, 95%, 70%, ${p.a})`;
+            ctx.shadowBlur = 10;
+
+            ctx.beginPath();
+            ctx.arc(x, y, 1.3 + (i % 3) * 0.4, 0, Math.PI * 2);
+            ctx.fill();
+          });
+
+          requestAnimationFrame(draw);
+        }
+        requestAnimationFrame(draw);
+      }
+
+      // ===== Background FX (giữ nguyên) =====
+      const fx = document.getElementById("fx");
+      const ctxFx = fx.getContext("2d");
+      let W, H, DPR;
+      function resizeFx() {
+        DPR = Math.min(2, devicePixelRatio || 1);
+        fx.width = Math.floor(innerWidth * DPR);
+        fx.height = Math.floor(innerHeight * DPR);
+        fx.style.width = innerWidth + "px";
+        fx.style.height = innerHeight + "px";
+        ctxFx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        W = innerWidth;
+        H = innerHeight;
+      }
+      addEventListener("resize", resizeFx);
+      resizeFx();
+
+      const hearts = [],
+        conf = [];
+      const rand = (a, b) => Math.random() * (b - a) + a;
+      const pick = (arr) => arr[(Math.random() * arr.length) | 0];
+
+      function heartPath(x, y, r, rot) {
+        ctxFx.save();
+        ctxFx.translate(x, y);
+        ctxFx.rotate(rot);
+        ctxFx.beginPath();
+        const s = r / 16;
+        ctxFx.moveTo(0, -10 * s);
+        ctxFx.bezierCurveTo(12 * s, -22 * s, 28 * s, -6 * s, 0, 20 * s);
+        ctxFx.bezierCurveTo(-28 * s, -6 * s, -12 * s, -22 * s, 0, -10 * s);
+        ctxFx.closePath();
+        ctxFx.restore();
+      }
+      function spawnHeart(x, y, big = false) {
+        hearts.push({
+          x,
+          y,
+          vx: rand(-0.9, 0.9),
+          vy: rand(-3.0, -1.2) * (big ? 1.2 : 1),
+          r: rand(big ? 16 : 9, big ? 30 : 18),
+          a: rand(0.75, 1),
+          rot: rand(-0.6, 0.6),
+          vr: rand(-0.03, 0.03),
+          life: rand(110, 220),
+          hue: pick([330, 345, 315, 0, 300]),
+        });
+      }
+      function spawnConfetti(x, y, n = 140) {
+        for (let i = 0; i < n; i++) {
+          conf.push({
+            x,
+            y,
+            vx: rand(-4.2, 4.2),
+            vy: rand(-6.4, -2.0),
+            g: rand(0.085, 0.15),
+            s: rand(4, 11),
+            rot: rand(0, Math.PI),
+            vr: rand(-0.3, 0.3),
+            life: rand(70, 140),
+            hue: pick([330, 345, 0, 290, 315, 210]),
+          });
+        }
+      }
+      function boom() {
+        const x = W / 2,
+          y = H * 0.52;
+        for (let i = 0; i < 12; i++)
+          spawnHeart(x + rand(-60, 60), y + rand(-20, 20), true);
+        spawnConfetti(x, y, 120);
+      }
+      function boomSmall() {
+        const x = W / 2,
+          y = H * 0.52;
+        for (let i = 0; i < 7; i++)
+          spawnHeart(x + rand(-50, 50), y + rand(-20, 20), false);
+      }
+      function boomBig() {
+        const x = W / 2,
+          y = H * 0.52;
+        for (let i = 0; i < 22; i++)
+          spawnHeart(x + rand(-90, 90), y + rand(-30, 30), true);
+        spawnConfetti(x, y, 190);
+      }
+
+      setInterval(() => spawnHeart(rand(40, W - 40), H + 30, false), 160);
+
+      function loopFx() {
+        ctxFx.clearRect(0, 0, W, H);
+
+        const grd = ctxFx.createRadialGradient(
+          W * 0.5,
+          H * 0.45,
+          60,
+          W * 0.5,
+          H * 0.45,
+          Math.max(W, H),
+        );
+        grd.addColorStop(0, "rgba(255,255,255,0.02)");
+        grd.addColorStop(1, "rgba(0,0,0,0.45)");
+        ctxFx.fillStyle = grd;
+        ctxFx.fillRect(0, 0, W, H);
+
+        for (let i = hearts.length - 1; i >= 0; i--) {
+          const p = hearts[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.rot += p.vr;
+          p.vy += 0.014;
+          p.life--;
+
+          ctxFx.fillStyle = `hsla(${p.hue},95%,72%,${p.a})`;
+          ctxFx.shadowColor = `hsla(${p.hue},95%,72%,${p.a})`;
+          ctxFx.shadowBlur = 18;
+          heartPath(p.x, p.y, p.r, p.rot);
+          ctxFx.fill();
+
+          if (p.life <= 0 || p.y < -80) hearts.splice(i, 1);
+        }
+
+        ctxFx.shadowBlur = 0;
+        for (let i = conf.length - 1; i >= 0; i--) {
+          const c = conf[i];
+          c.x += c.vx;
+          c.y += c.vy;
+          c.vy += c.g;
+          c.rot += c.vr;
+          c.life--;
+          ctxFx.save();
+          ctxFx.translate(c.x, c.y);
+          ctxFx.rotate(c.rot);
+          ctxFx.fillStyle = `hsla(${c.hue},95%,70%,0.92)`;
+          ctxFx.fillRect(-c.s / 2, -c.s / 2, c.s, c.s * 0.9);
+          ctxFx.restore();
+          if (c.life <= 0 || c.y > H + 90) conf.splice(i, 1);
+        }
+
+        requestAnimationFrame(loopFx);
+      }
+      loopFx();
+
+      setTimeout(() => boom(), 650);
+    </script>
+  </body>
+</html>
