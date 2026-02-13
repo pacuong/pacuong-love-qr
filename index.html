@@ -555,6 +555,29 @@
       /* ===== PHONE LANDSCAPE TUNING (xoay ngang) ===== */
       /* Ưu tiên màn thấp (chiều cao nhỏ) + landscape */
       @media (max-height: 520px) and (orientation: landscape) {
+        .side.back {
+          overflow: auto;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        /* QUAN TRỌNG: đừng cắt nội dung trong panel */
+        .panelIn {
+          height: auto;
+          overflow: visible;
+          min-height: 0;
+        }
+
+        /* khống chế chiều cao ảnh để còn chỗ cho button */
+        .photo {
+          flex: 0 0 auto;
+          height: clamp(160px, 42vh, 260px);
+          min-height: 160px;
+        }
+
+        /* đảm bảo khu vực nút luôn hiện */
+        .miniControls {
+          padding-top: 8px;
+        }
         body {
           overflow: hidden;
         }
